@@ -8,6 +8,7 @@ class Car:
     """小车类"""
 
     def __init__(self, car_play):
+        logging.basicConfig(level=logging.INFO)
         self.settings = car_play.settings
 
         self.steer_angle = 0  # 车轮转向角度，0度为正前，左负右正
@@ -33,7 +34,12 @@ class Car:
         # 开始调整前将转向完成标志置零
         self.settings.steer_finish_flag = False
         # 根据占空比与轴读数的关系式计算目标占空比,并圆整至一位小数，防止频繁改变占空比导致的抖动
-        target_steer_dc = round(-1.5 * self.settings.steer_axis_pos + 7.5, 1)
+        x = 0
+        if self.settings.steer_axis_pos > 0:
+            x = 1.5
+        if self.settings.steer_axis_pos < 0:
+            x = 3.5
+        target_steer_dc = round(x * self.settings.steer_axis_pos + 7.5, 1)
         # 计算目标值与当前的偏差
         steer_dc_delta = target_steer_dc - self.settings.steer_dc_last
 

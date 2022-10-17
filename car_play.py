@@ -59,3 +59,13 @@ class CarPlay:
             print(f'摇杆读数:{self.settings.steer_axis_pos}\n')
             self.settings.steer_axis_flag = True
             self.car.steer()
+
+
+if __name__ == '__main__':
+    try:
+        car = CarPlay()
+        car.play()
+    except KeyboardInterrupt:
+        sys.exit()
+    finally:
+        GPIO.cleanup()  # 清理释放GPIO资源，将GPIO复位
