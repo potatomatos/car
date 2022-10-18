@@ -58,6 +58,7 @@ class CarPlay:
 
         # 右扳机控制刹车
         if self.joystick.get_axis(4) > 0:
+            self.settings.logger.info(f'右扳机读数:{self.joystick.get_axis(4)}\n')
             self.car.motor_stop()
         else:
             self.car.moving_stop = False
@@ -68,8 +69,8 @@ class CarPlay:
         # 当上次转向调整完成后才开始新的一轮转向控制
         if self.settings.steer_finish_flag:
             self.settings.steer_axis_pos = left_stick_x
-            self.settings.logger('-----------------------------------------')
-            self.settings.logger(f'摇杆读数:{self.settings.steer_axis_pos}\n')
+            self.settings.logger.info('-----------------------------------------')
+            self.settings.logger.info(f'摇杆读数:{self.settings.steer_axis_pos}\n')
             self.settings.steer_axis_flag = True
             self.car.steer()
 
@@ -86,8 +87,10 @@ class CarPlay:
         # 前进后退
         if button_a:
             self.car.moving_back = True
+            self.settings.logger.info('A键按下:%s' % button_a)
         elif button_b:
             self.car.moving_forward = True
+            self.settings.logger.info('B键按下:%s' % button_b)
         else:
             self.car.moving_back = False
             self.car.moving_forward = False
