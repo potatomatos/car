@@ -29,7 +29,7 @@ class Car:
         time.sleep(0.04)  # 等待控制周期结束
         self.pwm_steer.ChangeDutyCycle(0)  # 清空占空比，防止抖动
         self.pwm_motor.start(self.settings.motor_dc)  # 启动PWM，并指定初始占空比
-        GPIO.output(self.settings.motor_dir_pin, GPIO.HIGH)  # 设定行驶方向向前
+        self.motor_stop()  # 初始化状态为静止
 
     def steer(self):
         """转向"""
