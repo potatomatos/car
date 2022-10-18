@@ -21,7 +21,7 @@ class Car:
         # 创建舵机PWM对象，并指定初始频率
         self.pwm_steer = GPIO.PWM(self.settings.steer_pin, self.settings.steer_freq)
         # 创建电机PWM对象，并指定初始频率
-        self.pwm_motor = GPIO.PWM(self.settings.motor_pin, self.settings.motor_freq)
+        self.pwm_motor = GPIO.PWM(self.settings.motor_pin_ENA, self.settings.motor_freq)
 
     def initialize(self):
         """初始化"""
@@ -77,9 +77,11 @@ class Car:
             self.pwm_motor.ChangeDutyCycle(self.settings.motor_dc)
             #  前进 后退
             if self.moving_forward:
-                GPIO.output(self.settings.motor_dir_pin, GPIO.HIGH)
+                GPIO.output(self.settings.motor_pin_IN1, GPIO.HIGH)
+                GPIO.output(self.settings.motor_pin_IN2, GPIO.LOW)
             elif self.moving_back:
-                GPIO.output(self.settings.motor_dir_pin, GPIO.LOW)
+                GPIO.output(self.settings.motor_pin_IN1, GPIO.LOW)
+                GPIO.output(self.settings.motor_pin_IN2, GPIO.HIGH)
 
     def motor_stop(self):
         """调整舵机角度"""
@@ -88,3 +90,12 @@ class Car:
         self.moving_back = False
         self.settings.motor_dc = 0
         self.pwm_motor.ChangeDutyCycle(self.settings.motor_dc)
+        # 两个都输入低电平电机则停止
+        GPIO.output(self.settings.motor_pin_IN1, GPIO.LOW)
+        GPIO.output(self.settings.motor_pin_IN2, GPIO.LOW)
+
+    def destroy(self):
+        """释放资源"""
+        self.pwm_steer.stop()
+        self.pwm_motor.stop()
+        GPIO.cleanup()  # 清理释放GPIO资源，将GPIO复位

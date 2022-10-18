@@ -1,8 +1,9 @@
 import sys
+
 import pygame
-import RPi.GPIO as GPIO
-from settings import Settings
+
 from car import Car
+from settings import Settings
 
 
 class CarPlay:
@@ -91,12 +92,16 @@ class CarPlay:
             self.car.moving_back = False
             self.car.moving_forward = False
 
+    def destroy(self):
+        """释放资源"""
+        self.car.destroy()
+
 
 if __name__ == '__main__':
+    car = CarPlay()
     try:
-        car = CarPlay()
         car.play()
     except KeyboardInterrupt:
         sys.exit()
     finally:
-        GPIO.cleanup()  # 清理释放GPIO资源，将GPIO复位
+        car.destroy()  # 释放资源
