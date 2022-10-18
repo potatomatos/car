@@ -25,7 +25,6 @@ class Settings:
         GPIO.setup(self.motor_pin, GPIO.OUT)  # 将GPIO设置为输出模式
         GPIO.setup(self.motor_dir_pin, GPIO.OUT)  # 将GPIO设置为输出模式
 
-
         # 用于手柄控制的变量
         self.steer_dc_last = 7.5  # 记录的上一次转向占空比
         self.steer_finish_flag = True  # 完成一次转向控制的标志
@@ -33,4 +32,4 @@ class Settings:
         self.steer_axis_pos_last = 0  # 上次控制方向的轴读数，左负右正
         self.steer_axis_flag = False  # 摇杆读数成功标志
         self.steer_dc_step = 0.1  # 转向调整步长
-        self.speed_axis_pos = -1    # 控制速度的轴读数
+        self.speed_axis_pos = -1  # 控制速度的轴读数
