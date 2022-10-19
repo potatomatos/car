@@ -104,7 +104,8 @@ if __name__ == '__main__':
     car = CarPlay()
     try:
         car.play()
-    except KeyboardInterrupt:
+    except Exception as e:
+        print(e)
         sys.exit()
     finally:
         car.destroy()  # 释放资源

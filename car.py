@@ -96,6 +96,7 @@ class Car:
 
     def destroy(self):
         """释放资源"""
+        self.settings.logger.info("======资源释放======")
         self.pwm_steer.stop()
         self.pwm_motor.stop()
         GPIO.cleanup()  # 清理释放GPIO资源，将GPIO复位
