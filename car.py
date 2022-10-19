@@ -84,7 +84,7 @@ class Car:
                 GPIO.output(self.settings.motor_pin_IN2, GPIO.HIGH)
 
     def motor_stop(self):
-        """调整舵机角度"""
+        """电机停止"""
         self.moving_stop = True
         self.moving_forward = False
         self.moving_back = False
